@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.mealType.MealTypeMapper">
+
+    <select id="findAll" resultType="MealTypeVO">
+        SELECT 
+            meal_type_id AS mealTypeId,
+            meal_type_name AS mealTypeName
+        FROM meal_type
+    </select>
+
+    <select id="findById" resultType="MealTypeVO">
+        SELECT 
+            meal_type_id AS mealTypeId,
+            meal_type_name AS mealTypeName
+        FROM meal_type
+        WHERE meal_type_id = #{mealTypeId}
+    </select>
+
+    <insert id="insert" parameterType="MealTypeVO">
+        INSERT INTO meal_type (
+            meal_type_name
+        ) VALUES (
+            #{mealTypeName}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="MealTypeVO">
+        UPDATE meal_type
+        SET meal_type_name = #{mealTypeName}
+        WHERE meal_type_id = #{mealTypeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM meal_type
+        WHERE meal_type_id = #{mealTypeId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM meal_type
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(meal_type_id)
+        FROM meal_type
+    </select>
+
+    <select id="findByMealTypeName" resultType="MealTypeVO">
+        SELECT 
+            meal_type_id AS mealTypeId,
+            meal_type_name AS mealTypeName
+        FROM meal_type
+        WHERE meal_type_name = #{mealTypeName}
+    </select>
+
+</mapper>

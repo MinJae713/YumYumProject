@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.exercise.repository.exerciseRecord.ExerciseRecordMapper">
+
+    <select id="findAll" resultType="ExerciseRecordVO">
+        SELECT 
+            exercise_record_id AS exerciseRecordId,
+            exercise_date AS exerciseDate,
+            duration_min AS durationMin,
+            calories_kcal AS caloriesKcal,
+            points AS points,
+            created_at AS createdAt,
+            updated_at AS updatedAt,
+            set_no AS setNo,
+            reps AS reps,
+            weight_kg AS weightKg,
+            exercise_id AS exerciseId,
+            user_id AS userId
+        FROM exercise_record
+    </select>
+
+    <select id="findById" resultType="ExerciseRecordVO">
+        SELECT 
+            exercise_record_id AS exerciseRecordId,
+            exercise_date AS exerciseDate,
+            duration_min AS durationMin,
+            calories_kcal AS caloriesKcal,
+            points AS points,
+            created_at AS createdAt,
+            updated_at AS updatedAt,
+            set_no AS setNo,
+            reps AS reps,
+            weight_kg AS weightKg,
+            exercise_id AS exerciseId,
+            user_id AS userId
+        FROM exercise_record
+        WHERE exercise_record_id = #{exerciseRecordId}
+    </select>
+
+    <insert id="insert" parameterType="ExerciseRecordVO">
+        INSERT INTO exercise_record (
+            exercise_date,
+            duration_min,
+            calories_kcal,
+            points,
+            set_no,
+            reps,
+            weight_kg,
+            exercise_id,
+            user_id
+        ) VALUES (
+            #{exerciseDate},
+            #{durationMin},
+            #{caloriesKcal},
+            #{points},
+            #{setNo},
+            #{reps},
+            #{weightKg},
+            #{exerciseId},
+            #{userId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="ExerciseRecordVO">
+        UPDATE exercise_record
+        SET 
+            exercise_date = #{exerciseDate},
+            duration_min = #{durationMin},
+            calories_kcal = #{caloriesKcal},
+            points = #{points},
+            set_no = #{setNo},
+            reps = #{reps},
+            weight_kg = #{weightKg},
+            exercise_id = #{exerciseId},
+            user_id = #{userId}
+        WHERE exercise_record_id = #{exerciseRecordId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM exercise_record
+        WHERE exercise_record_id = #{exerciseRecordId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM exercise_record
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(exercise_record_id)
+        FROM exercise_record
+    </select>
+    
+    <select id="findAllByUserIdAndExerciseDate">
+    	SELECT 
+            exercise_record_id AS exerciseRecordId,
+            exercise_date AS exerciseDate,
+            duration_min AS durationMin,
+            calories_kcal AS caloriesKcal,
+            points AS points,
+            created_at AS createdAt,
+            updated_at AS updatedAt,
+            set_no AS setNo,
+            reps AS reps,
+            weight_kg AS weightKg,
+            exercise_id AS exerciseId,
+            user_id AS userId
+        FROM exercise_record
+        WHERE user_id = #{userId}
+        AND exercise_date = #{exerciseDate}
+    </select>
+    
+    <select id="findExerciseDateByUserIdAndExerciseYearAndExerciseMonth">
+    	SELECT DISTINCT
+    		exercise_date AS exerciseDate
+    	FROM exercise_record
+    	WHERE user_id = #{userId}
+    	AND YEAR(exercise_date) = #{year}
+    	AND MONTH(exercise_date) = #{month}
+    </select>
+
+	<select id="findAllByUserIdAndExerciseDateBetweenStartDateAndEndDateOrderByExerciseDate" resultType="ExerciseRecordVO">
+        SELECT 
+            exercise_record_id AS exerciseRecordId,
+            exercise_date AS exerciseDate,
+            duration_min AS durationMin,
+            calories_kcal AS caloriesKcal,
+            points AS points,
+            created_at AS createdAt,
+            updated_at AS updatedAt,
+            set_no AS setNo,
+            reps AS reps,
+            weight_kg AS weightKg,
+            exercise_id AS exerciseId,
+            user_id AS userId
+        FROM exercise_record
+        WHERE user_id = #{userId}
+        AND exercise_date 
+        BETWEEN #{startDate} AND #{endDate}
+        ORDER BY exercise_date
+    </select>
+    
+    <select id="findAllByUserId">
+    	SELECT 
+            exercise_record_id AS exerciseRecordId,
+            exercise_date AS exerciseDate,
+            duration_min AS durationMin,
+            calories_kcal AS caloriesKcal,
+            points AS points,
+            created_at AS createdAt,
+            updated_at AS updatedAt,
+            set_no AS setNo,
+            reps AS reps,
+            weight_kg AS weightKg,
+            exercise_id AS exerciseId,
+            user_id AS userId
+        FROM exercise_record
+        WHERE user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.meal.MealMapper">
+
+    <select id="findAll" resultType="MealVO">
+        SELECT *
+        FROM meal
+    </select>
+
+    <select id="findById" resultType="MealVO">
+        SELECT *
+        FROM meal
+        WHERE meal_id = #{mealId}
+    </select>
+
+    <insert id="insert" parameterType="MealVO" useGeneratedKeys="true" keyProperty="mealId">
+        INSERT INTO meal (
+            meal_date,
+            total_kcal,
+            point,
+            is_recommendation,
+            user_id,
+            meal_type_id,
+            meal_creator_type_id
+        ) VALUES (
+            #{mealDate},
+            #{totalKcal},
+            #{point},
+            #{isRecommendation},
+            #{userId},
+            #{mealTypeId},
+            #{mealCreatorTypeId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="MealVO">
+        UPDATE meal
+        SET meal_date = #{mealDate},
+            total_kcal = #{totalKcal},
+            point = #{point},
+            is_recommendation = #{isRecommendation},
+            user_id = #{userId},
+            meal_type_id = #{mealTypeId},
+            meal_creator_type_id = #{mealCreatorTypeId}
+        WHERE meal_id = #{mealId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM meal
+        WHERE meal_id = #{mealId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM meal
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(meal_id)
+        FROM meal
+    </select>
+
+    <select id="findAllByUserIdAndMealDate" resultType="MealVO">
+        SELECT * 
+        FROM meal
+        WHERE user_id = #{userId}
+          AND meal_date = #{mealDate}
+    </select>
+    
+    <select id="findMealDateByUserIdAndMealYearAndMealMonth">
+    	SELECT DISTINCT
+    		meal_date AS mealDate
+    	FROM meal
+    	WHERE user_id = #{userId}
+    	AND YEAR(meal_date) = #{year}
+    	AND MONTH(meal_date) = #{month}
+    	AND is_recommendation = 0
+    </select>
+    
+    <select id="findAllByUserId" resultType="MealVO">
+        SELECT *
+        FROM meal
+        WHERE user_id = #{userId}
+    </select>
+    
+    <select id="findAllByUserIdAndMealDateBetweenStartDateAndEndDate" resultType="MealVO">
+        SELECT *
+        FROM meal
+        WHERE user_id = #{userId}
+        AND meal_date
+        BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+    <select id="findAllAiMealsForAdmin" resultType="MealVO">
+        SELECT *
+        FROM meal
+        WHERE meal_creator_type_id = 2
+        ORDER BY meal_date DESC, meal_id DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAllAiMealsForAdmin" resultType="int">
+        SELECT COUNT(*)
+        FROM meal
+        WHERE meal_creator_type_id = 2
+    </select>
+
+</mapper>

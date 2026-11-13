@@ -1,0 +1,1 @@
+알림은 아직 안넣음 -> 테이블은 notification, notification_type

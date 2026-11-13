@@ -1,0 +1,41 @@
+{
+  "name": "yumyum",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@unovis/ts": "^1.6.2",
+    "@unovis/vue": "^1.6.2",
+    "@vee-validate/zod": "^4.15.1",
+    "@vueuse/core": "^14.1.0",
+    "axios": "^1.13.2",
+    "chart.js": "^4.5.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "embla-carousel-vue": "^8.6.0",
+    "lucide-vue-next": "^0.556.0",
+    "pinia": "^3.0.4",
+    "reka-ui": "^2.6.1",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul-vue": "^0.4.1",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.24",
+    "vue-chartjs": "^5.3.3",
+    "vue-router": "^4.6.3",
+    "vue-sonner": "^2.0.9",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18",
+    "vite": "^7.2.4"
+  }
+}

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.badge.repository.badgeProgress.BadgeProgressMapper">
+
+    <select id="findAll" resultType="BadgeProgressVO">
+        SELECT *
+        FROM badge_progress
+    </select>
+
+    <select id="findById" resultType="BadgeProgressVO">
+        SELECT *
+        FROM badge_progress
+        WHERE badge_progress_id = #{badgeProgressId}
+    </select>
+
+    <insert id="insert" parameterType="BadgeProgressVO">
+        INSERT INTO badge_progress (
+            streak_type,
+            start_date,
+            longest_streak,
+            last_date,
+            user_id
+        ) VALUES (
+            #{streakType},
+            #{startDate},
+            #{longestStreak},
+            #{lastDate},
+            #{userId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="BadgeProgressVO">
+        UPDATE badge_progress
+        SET streak_type = #{streakType},
+            start_date = #{startDate},
+            longest_streak = #{longestStreak},
+            last_date = #{lastDate},
+            user_id = #{userId}
+        WHERE badge_progress_id = #{badgeProgressId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM badge_progress
+        WHERE badge_progress_id = #{badgeProgressId}
+    </delete>
+
+	<select id="count">
+    	SELECT COUNT(*) 
+    	FROM badge_progress
+    </select>
+    <select id="maxId">
+    	SELECT MAX(badge_progress_id)
+    	FROM badge_progress
+    </select>
+    <select id="findByUserIdAndStreakType">
+    	SELECT *
+        FROM badge_progress
+        WHERE user_id = #{userId}
+        AND streak_type = #{streakType}
+    </select>
+    <select id="findAllByUserId">
+    	SELECT *
+        FROM badge_progress
+        WHERE user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.user.repository.provider.ProviderMapper">
+
+    <select id="findAll" resultType="ProviderVO">
+        SELECT *
+        FROM provider
+    </select>
+
+    <select id="findById" resultType="ProviderVO">
+        SELECT *
+        FROM provider
+        WHERE provider_id = #{providerId}
+    </select>
+
+    <insert id="insert" parameterType="ProviderVO">
+        INSERT INTO provider (
+            provider_name
+        ) VALUES (
+            #{providerName}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="ProviderVO">
+        UPDATE provider
+        SET provider_name = #{providerName}
+        WHERE provider_id = #{providerId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM provider
+        WHERE provider_id = #{providerId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*)
+        FROM provider
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(provider_id)
+        FROM provider
+    </select>
+
+</mapper>

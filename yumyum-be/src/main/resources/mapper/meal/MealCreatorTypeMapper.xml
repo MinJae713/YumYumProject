@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.mealCreatorType.MealCreatorTypeMapper">
+
+    <select id="findAll" resultType="MealCreatorTypeVO">
+        SELECT *
+        FROM meal_creator_type
+    </select>
+
+    <select id="findById" resultType="MealCreatorTypeVO">
+        SELECT *
+        FROM meal_creator_type
+        WHERE meal_creator_type_id = #{mealCreatorTypeId}
+    </select>
+
+    <insert id="insert" parameterType="MealCreatorTypeVO">
+        INSERT INTO meal_creator_type (
+            meal_creator_type_name
+        ) VALUES (
+            #{mealCreatorTypeName}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="MealCreatorTypeVO">
+        UPDATE meal_creator_type
+        SET meal_creator_type_name = #{mealCreatorTypeName}
+        WHERE meal_creator_type_id = #{mealCreatorTypeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM meal_creator_type
+        WHERE meal_creator_type_id = #{mealCreatorTypeId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM meal_creator_type
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(meal_creator_type_id)
+        FROM meal_creator_type
+    </select>
+
+    <select id="findByMealCreatorTypeName" resultType="MealCreatorTypeVO">
+        SELECT * 
+        FROM meal_creator_type
+        WHERE meal_creator_type_name = #{mealCreatorTypeName}
+    </select>
+
+</mapper>

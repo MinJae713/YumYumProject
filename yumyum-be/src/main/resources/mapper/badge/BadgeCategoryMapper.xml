@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.badge.repository.badgeCategory.BadgeCategoryMapper">
+
+    <select id="findAll" resultType="BadgeCategoryVO">
+        SELECT 
+            badge_category_id AS badgeCategoryId,
+            badge_category_name AS badgeCategoryName
+        FROM badge_category
+    </select>
+
+    <select id="findById" resultType="BadgeCategoryVO">
+        SELECT 
+            badge_category_id AS badgeCategoryId,
+            badge_category_name AS badgeCategoryName
+        FROM badge_category
+        WHERE badge_category_id = #{badgeCategoryId}
+    </select>
+
+    <insert id="insert" parameterType="BadgeCategoryVO">
+        INSERT INTO badge_category (
+            badge_category_name
+        ) VALUES (
+            #{badgeCategoryName}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="BadgeCategoryVO">
+        UPDATE badge_category
+        SET badge_category_name = #{badgeCategoryName}
+        WHERE badge_category_id = #{badgeCategoryId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM badge_category
+        WHERE badge_category_id = #{badgeCategoryId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM badge_category
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(badge_category_id)
+        FROM badge_category
+    </select>
+
+</mapper>

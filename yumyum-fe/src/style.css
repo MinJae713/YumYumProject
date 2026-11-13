@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-size: 16px;
+    --background: #fafbfc;
+    --foreground: #1a202c;
+    --card: #ffffff;
+    --card-foreground: #1a202c;
+    --popover: #ffffff;
+    --popover-foreground: #1a202c;
+    
+    /* Primary: 신선한 그린 */
+    --primary: #10b981;
+    --primary-foreground: #ffffff;
+    
+    /* Secondary: 신뢰감 있는 블루 */
+    --secondary: #3b82f6;
+    --secondary-foreground: #ffffff;
+    
+    /* Muted */
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    
+    /* Accent: 오렌지 */
+    --accent: #f97316;
+    --accent-foreground: #ffffff;
+    
+    /* Destructive */
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    
+    --border: #e2e8f0;
+    --input: transparent;
+    --input-background: #f8fafc;
+    --switch-background: #cbd5e1;
+    
+    --font-weight-medium: 500;
+    --font-weight-normal: 400;
+    
+    --ring: #10b981;
+    
+    --radius: 0.75rem;
+    
+    /* Chart colors */
+    --chart-1: #10b981;
+    --chart-2: #3b82f6;
+    --chart-3: #f97316;
+    --chart-4: #8b5cf6;
+    --chart-5: #eab308;
+    
+    --sidebar: #ffffff;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 98%;
+  }
+
+  .dark {
+    --background: #0f172a;
+    --foreground: #f1f5f9;
+    --card: #1e293b;
+    --card-foreground: #f1f5f9;
+    --popover: #1e293b;
+    --popover-foreground: #f1f5f9;
+    
+    --primary: #34d399;
+    --primary-foreground: #0f172a;
+    
+    --secondary: #60a5fa;
+    --secondary-foreground: #0f172a;
+    
+    --muted: #334155;
+    --muted-foreground: #94a3b8;
+    
+    --accent: #fb923c;
+    --accent-foreground: #0f172a;
+    
+    --destructive: #f87171;
+    --destructive-foreground: #0f172a;
+    
+    --border: #334155;
+    --input: #334155;
+    --ring: #34d399;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  h1 { @apply text-2xl font-medium; }
+  h2 { @apply text-xl font-medium; }
+  h3 { @apply text-lg font-medium; }
+  p { @apply text-base font-normal; }
+}
+
+html {
+  font-size: var(--font-size);
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.foodUnit.FoodUnitMapper">
+
+    <select id="findAll" resultType="FoodUnitVO">
+        SELECT *
+        FROM food_unit
+    </select>
+
+    <select id="findById" resultType="FoodUnitVO">
+        SELECT *
+        FROM food_unit
+        WHERE food_unit_id = #{foodUnitId}
+    </select>
+
+    <insert id="insert" parameterType="FoodUnitVO">
+        INSERT INTO food_unit (
+            unit_name
+        ) VALUES (
+            #{unitName}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="FoodUnitVO">
+        UPDATE food_unit
+        SET unit_name = #{unitName}
+        WHERE food_unit_id = #{foodUnitId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM food_unit
+        WHERE food_unit_id = #{foodUnitId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM food_unit
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(food_unit_id)
+        FROM food_unit
+    </select>
+
+    <select id="findIdByUnitName">
+        SELECT food_unit_id
+        FROM food_unit
+        WHERE unit_name = #{unitName}
+    </select>
+
+</mapper>

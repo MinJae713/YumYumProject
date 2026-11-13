@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.group.repository.group.GroupMapper">
+
+    <select id="findAll" resultType="GroupVO">
+        SELECT 
+            group_id AS groupId,
+            group_name AS groupName,
+            created_at AS createdAt,
+            user_id AS userId
+        FROM group_table
+    </select>
+
+    <select id="findById" resultType="GroupVO">
+        SELECT 
+            group_id AS groupId,
+            group_name AS groupName,
+            created_at AS createdAt,
+            user_id AS userId
+        FROM group_table
+        WHERE group_id = #{groupId}
+    </select>
+
+    <insert id="insert" parameterType="GroupVO" useGeneratedKeys="true" keyProperty="groupId">
+        INSERT INTO group_table (
+            group_name,
+            user_id
+        ) VALUES (
+            #{groupName},
+            #{userId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="GroupVO">
+        UPDATE group_table
+        SET 
+            group_name = #{groupName},
+            user_id = #{userId}
+        WHERE group_id = #{groupId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM group_table
+        WHERE group_id = #{groupId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM group_table
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(group_id)
+        FROM group_table
+    </select>
+
+</mapper>

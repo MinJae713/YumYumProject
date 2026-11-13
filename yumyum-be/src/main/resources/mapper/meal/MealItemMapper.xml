@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.mealItem.MealItemMapper">
+
+    <select id="findAll" resultType="MealItemVO">
+        SELECT *
+        FROM meal_item
+    </select>
+
+    <select id="findById" resultType="MealItemVO">
+        SELECT *
+        FROM meal_item
+        WHERE meal_item_id = #{mealItemId}
+    </select>
+
+    <insert id="insert" parameterType="MealItemVO">
+        INSERT INTO meal_item (
+            amount,
+            meal_id,
+            food_id
+        ) VALUES (
+            #{amount},
+            #{mealId},
+            #{foodId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="MealItemVO">
+        UPDATE meal_item
+        SET amount = #{amount},
+            meal_id = #{mealId},
+            food_id = #{foodId}
+        WHERE meal_item_id = #{mealItemId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM meal_item
+        WHERE meal_item_id = #{mealItemId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM meal_item
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(meal_item_id)
+        FROM meal_item
+    </select>
+
+    <select id="findAllByMealId" resultType="MealItemVO">
+        SELECT * 
+        FROM meal_item
+        WHERE meal_id = #{mealId}
+    </select>
+
+    <select id="findByMeallIdAndFoodId" resultType="MealItemVO">
+        SELECT * 
+        FROM meal_item
+        WHERE meal_id = #{mealId}
+          AND food_id = #{foodId}
+    </select>
+
+    <update id="updateFoodId">
+        UPDATE meal_item
+        SET food_id = #{realFoodId}
+        WHERE food_id = #{tempFoodId}
+    </update>
+
+    <select id="findMealIdsByFoodId" resultType="long">
+        SELECT DISTINCT meal_id
+        FROM meal_item
+        WHERE food_id = #{foodId}
+    </select>
+</mapper>

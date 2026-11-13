@@ -1,0 +1,106 @@
+############################
+# OS (운영체제)
+############################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+############################
+# IDE 관련
+############################
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+# IntelliJ 복구용 파일
+/.idea/**/workspace.xml
+/.idea/**/tasks.xml
+/.idea/**/vcs.xml
+/.idea/**/dataSources/
+# JetBrains cache
+/.idea/**/dictionaries
+/.idea/**/libraries
+
+# VSCode
+.vscode/
+
+# Eclipse / STS
+.metadata/
+.project
+.classpath
+.settings/
+
+bin/
+.buildpath
+.factorypath       # <<< 추가됨
+.springBeans
+.sts4-cache
+.apt_generated
+
+############################
+# Maven 빌드 아웃풋
+############################
+target/
+log/
+logs/
+
+############################
+# Spring Boot
+############################
+
+# 로그 파일
+*.log
+
+# 임시 파일
+*.tmp
+
+# Embedded server working directory
+.springBeans
+
+############################
+# 민감 정보 (꼭 제외해야 하는 것들)
+############################
+
+# 환경 파일
+application.properties
+application.yml
+application-dev.properties
+application-prod.properties
+
+# DB, 비밀키, 인증 관련
+*.db
+*.sqlite
+*.h2.db
+*.pem
+*.key
+*.crt
+
+############################
+# 기타 파일
+############################
+
+# 자바 컴파일 산출물
+*.class
+
+# 스냅샷 파일
+*.swp
+*~
+*.swo
+
+# 파이썬 노트북 같은거 작업 시
+.ipynb_checkpoints/
+
+# 업로드 파일
+uploads/

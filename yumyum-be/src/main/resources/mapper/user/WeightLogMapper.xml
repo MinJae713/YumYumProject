@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.user.repository.weightLog.WeightLogMapper">
+
+    <select id="findAll" resultType="WeightLogVO">
+        SELECT *
+        FROM weight_log
+    </select>
+
+    <select id="findById" resultType="WeightLogVO">
+        SELECT *
+        FROM weight_log
+        WHERE weight_log_id = #{weightLogId}
+    </select>
+
+    <insert id="insert" parameterType="WeightLogVO">
+        INSERT INTO weight_log (
+            log_date,
+            weight_kg,
+            user_id
+        ) VALUES (
+            #{logDate},
+            #{weightKg},
+            #{userId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="WeightLogVO">
+        UPDATE weight_log
+        SET log_date = #{logDate},
+            weight_kg = #{weightKg},
+            user_id = #{userId}
+        WHERE weight_log_id = #{weightLogId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM weight_log
+        WHERE weight_log_id = #{weightLogId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*)
+        FROM weight_log
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(weight_log_id)
+        FROM weight_log
+    </select>
+    
+    <select id="findAllByUserIdOrderByLogDate" resultType="WeightLogVO">
+        SELECT *
+        FROM weight_log
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="findByDateAndUserId" resultType="WeightLogVO">
+        SELECT *
+        FROM weight_log
+        WHERE log_date = #{logDate}
+            AND user_id = #{userId}
+    </select>
+
+    <select id="findAllByUserIdOrderByDate" resultType="WeightLogVO">
+        SELECT *
+        FROM weight_log
+        WHERE user_id = #{userId}
+        ORDER BY log_date ASC
+    </select>
+
+    <select id="findLatestWeightByUserId" resultType="Double">
+        SELECT weight_kg
+        FROM weight_log
+        WHERE user_id = #{userId}
+        ORDER BY log_date DESC
+        LIMIT 1
+    </select>
+
+</mapper>

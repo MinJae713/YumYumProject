@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.exercise.repository.exerciseCategory.ExerciseCategoryMapper">
+
+    <select id="findAll" resultType="ExerciseCategoryVO">
+        SELECT 
+            exercise_category_id AS exerciseCategoryId,
+            exercise_category_name AS exerciseCategoryName
+        FROM exercise_category
+    </select>
+
+    <select id="findById" resultType="ExerciseCategoryVO">
+        SELECT 
+            exercise_category_id AS exerciseCategoryId,
+            exercise_category_name AS exerciseCategoryName
+        FROM exercise_category
+        WHERE exercise_category_id = #{exerciseCategoryId}
+    </select>
+
+    <insert id="insert" parameterType="ExerciseCategoryVO">
+        INSERT INTO exercise_category (
+            exercise_category_name
+        ) VALUES (
+            #{exerciseCategoryName}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="ExerciseCategoryVO">
+        UPDATE exercise_category
+        SET exercise_category_name = #{exerciseCategoryName}
+        WHERE exercise_category_id = #{exerciseCategoryId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM exercise_category
+        WHERE exercise_category_id = #{exerciseCategoryId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM exercise_category
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(exercise_category_id)
+        FROM exercise_category
+    </select>
+    
+    <select id="findIdByCategoryName">
+    	SELECT exercise_category_id
+    	FROM exercise_category
+    	WHERE exercise_category_name = #{categoryName}
+    </select>
+
+</mapper>

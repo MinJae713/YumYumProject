@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.foodCache.FoodCacheMapper">
+
+    <insert id="insert" parameterType="FoodCacheVO" useGeneratedKeys="true" keyProperty="foodCacheId">
+        INSERT IGNORE INTO food_cache (
+            food_name,
+            food_id,
+            status
+        ) VALUES (
+            #{foodName},
+            #{foodId},
+            #{status}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="FoodCacheVO">
+        UPDATE food_cache
+        SET food_id = #{foodId},
+            status = #{status}
+        WHERE food_cache_id = #{foodCacheId}
+    </update>
+
+    <select id="findByFoodName" resultType="FoodCacheVO">
+        SELECT *
+        FROM food_cache
+        WHERE food_name = #{foodName}
+    </select>
+
+    <select id="findByStatus" resultType="FoodCacheVO">
+        SELECT *
+        FROM food_cache
+        WHERE status = #{status}
+    </select>
+
+    <select id="findByFoodNameIgnoreSpace" resultType="FoodCacheVO">
+        SELECT *
+        FROM food_cache
+        WHERE REPLACE(food_name, ' ', '') = #{cleanName}
+        LIMIT 1
+    </select>
+
+</mapper>

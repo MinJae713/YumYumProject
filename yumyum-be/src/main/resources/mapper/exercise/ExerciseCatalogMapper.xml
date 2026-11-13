@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.exercise.repository.exerciseCatalog.ExerciseCatalogMapper">
+
+    <select id="findAll" resultType="ExerciseCatalogVO">
+        SELECT 
+            exercise_id AS exerciseId,
+            name AS name,
+            met_value AS metValue,
+            exercise_category_id AS exerciseCategoryId
+        FROM exercise_catalog
+    </select>
+
+    <select id="findById" resultType="ExerciseCatalogVO">
+        SELECT 
+            exercise_id AS exerciseId,
+            name AS name,
+            met_value AS metValue,
+            exercise_category_id AS exerciseCategoryId
+        FROM exercise_catalog
+        WHERE exercise_id = #{exerciseId}
+    </select>
+
+    <insert id="insert" parameterType="ExerciseCatalogVO">
+        INSERT INTO exercise_catalog (
+            name,
+            met_value,
+            exercise_category_id
+        ) VALUES (
+            #{name},
+            #{metValue},
+            #{exerciseCategoryId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="ExerciseCatalogVO">
+        UPDATE exercise_catalog
+        SET 
+            name = #{name},
+            met_value = #{metValue},
+            exercise_category_id = #{exerciseCategoryId}
+        WHERE exercise_id = #{exerciseId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM exercise_catalog
+        WHERE exercise_id = #{exerciseId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM exercise_catalog
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(exercise_id)
+        FROM exercise_catalog
+    </select>
+
+	<select id="findByName">
+		SELECT 
+            exercise_id AS exerciseId,
+            name AS name,
+            met_value AS metValue,
+            exercise_category_id AS exerciseCategoryId
+        FROM exercise_catalog
+        WHERE name = #{name}
+	</select>
+	
+	<select id="findAllByExerciseCategoryId">
+		SELECT 
+            exercise_id AS exerciseId,
+            name AS name,
+            met_value AS metValue,
+            exercise_category_id AS exerciseCategoryId
+        FROM exercise_catalog
+        WHERE exercise_category_id = #{exerciseCategoryId}
+	</select>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.group.repository.groupInvite.GroupInviteMapper">
+
+    <select id="findAll" resultType="GroupInviteVO">
+        SELECT 
+            group_invite_id AS groupInviteId,
+            status AS status,
+            sent_at AS sentAt,
+            responded_at AS respondedAt,
+            user_id AS userId,
+            group_id AS groupId
+        FROM group_invite
+    </select>
+
+    <select id="findById" resultType="GroupInviteVO">
+        SELECT 
+            group_invite_id AS groupInviteId,
+            status AS status,
+            sent_at AS sentAt,
+            responded_at AS respondedAt,
+            user_id AS userId,
+            group_id AS groupId
+        FROM group_invite
+        WHERE group_invite_id = #{groupInviteId}
+    </select>
+
+    <insert id="insert" parameterType="GroupInviteVO">
+        INSERT INTO group_invite (
+            status,
+            sent_at,
+            responded_at,
+            user_id,
+            group_id
+        ) VALUES (
+            #{status},
+            #{sentAt},
+            #{respondedAt},
+            #{userId},
+            #{groupId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="GroupInviteVO">
+        UPDATE group_invite
+        SET
+            status = #{status},
+            sent_at = #{sentAt},
+            responded_at = #{respondedAt},
+            user_id = #{userId},
+            group_id = #{groupId}
+        WHERE group_invite_id = #{groupInviteId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM group_invite
+        WHERE group_invite_id = #{groupInviteId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM group_invite
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(group_invite_id)
+        FROM group_invite
+    </select>
+
+    <delete id="deleteByGroupId">
+        DELETE FROM group_invite
+        WHERE group_id = #{groupId}
+    </delete>
+
+    <select id="existPendingByGroupIdAndUserId" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM group_invite
+        WHERE group_id = #{groupId}
+            AND user_id = #{userId}
+            AND status = 'PENDING'
+    </select>
+
+    <select id="findPendingInvitesByUserId" resultType="GroupInviteListResponse">
+        SELECT
+            gi.group_invite_id AS groupInviteId,
+            gi.group_id        AS groupId,
+            gi.sent_at         AS sentAt,
+            gt.group_name      AS groupName,
+            u.name             AS leaderName
+        FROM group_invite gi
+        INNER JOIN
+            group_table gt ON gi.group_id = gt.group_id
+        INNER JOIN
+            users u ON gt.user_id = u.user_id
+        WHERE
+            gi.user_id = #{userId}
+            AND gi.status = 'PENDING'
+        ORDER BY
+            gi.sent_at DESC
+    </select>
+</mapper>

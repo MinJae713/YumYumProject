@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.badge.repository.badge.BadgeMapper">
+
+    <select id="findAll" resultType="BadgeVO">
+        SELECT 
+            badge_id AS badgeId,
+            badge_type AS badgeType,
+            badge_title AS badgeTitle,
+            description AS description,
+            image_url AS imageUrl,
+            badge_category_id AS badgeCategoryId
+        FROM badge
+    </select>
+
+    <select id="findById" resultType="BadgeVO">
+        SELECT 
+            badge_id AS badgeId,
+            badge_type AS badgeType,
+            badge_title AS badgeTitle,
+            description AS description,
+            image_url AS imageUrl,
+            badge_category_id AS badgeCategoryId
+        FROM badge
+        WHERE badge_id = #{badgeId}
+    </select>
+
+    <insert id="insert" parameterType="BadgeVO">
+        INSERT INTO badge (
+			badge_type,
+            badge_title,
+            description,
+            image_url,
+            badge_category_id
+        ) VALUES (
+			#{badgeType},
+            #{badgeTitle},
+            #{description},
+            #{imageUrl},
+            #{badgeCategoryId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="BadgeVO">
+        UPDATE badge
+        SET 
+        	badge_type = #{badgeType},
+            badge_title = #{badgeTitle},
+            description = #{description},
+            image_url = #{imageUrl},
+            badge_category_id = #{badgeCategoryId}
+        WHERE badge_id = #{badgeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM badge
+        WHERE badge_id = #{badgeId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM badge
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(badge_id)
+        FROM badge
+    </select>
+    <select id="findByBadgeType" resultType="BadgeVO"> 
+    	SELECT 
+    		badge_id AS badgeId, 
+    		badge_type AS badgeType, 
+    		badge_title AS badgeTitle, 
+    		description AS description, 
+    		image_url AS imageUrl, 
+    		badge_category_id AS badgeCategoryId 
+		FROM badge 
+		WHERE badge_type = #{badgeType} 
+	</select>
+
+</mapper>

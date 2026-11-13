@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.group.repository.exerciseFeedback.ExerciseFeedbackMapper">
+
+    <select id="findAll" resultType="ExerciseFeedbackVO">
+        SELECT 
+            exercise_feedback_id AS exerciseFeedbackId,
+            content AS content,
+            created_at AS createdAt,
+            exercise_record_id AS exerciseRecordId,
+            group_member_id AS groupMemberId
+        FROM exercise_feedback
+    </select>
+
+    <select id="findById" resultType="ExerciseFeedbackVO">
+        SELECT 
+            exercise_feedback_id AS exerciseFeedbackId,
+            content AS content,
+            created_at AS createdAt,
+            exercise_record_id AS exerciseRecordId,
+            group_member_id AS groupMemberId
+        FROM exercise_feedback
+        WHERE exercise_feedback_id = #{exerciseFeedbackId}
+    </select>
+
+    <insert id="insert" parameterType="ExerciseFeedbackVO" useGeneratedKeys="true" keyProperty="exerciseFeedbackId">
+        INSERT INTO exercise_feedback (
+            content,
+            exercise_record_id,
+            group_member_id
+        ) VALUES (
+            #{content},
+            #{exerciseRecordId},
+            #{groupMemberId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="ExerciseFeedbackVO">
+        UPDATE exercise_feedback
+        SET content = #{content}
+        WHERE exercise_feedback_id = #{exerciseFeedbackId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM exercise_feedback
+        WHERE exercise_feedback_id = #{exerciseFeedbackId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM exercise_feedback
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(exercise_feedback_id)
+        FROM exercise_feedback
+    </select>
+
+    <select id="findAllByGroupIdAndExerciseRecordId" resultType="FeedbackResponse">
+        SELECT
+            f.exercise_feedback_id AS feedbackId,
+            f.content              AS content,
+            f.created_at           AS createdAt,
+            u.user_id              AS writerUserId,
+            u.name                 AS writerName,
+            m.role                 AS writerRole
+        FROM
+            exercise_feedback f
+        JOIN
+            group_member m ON f.group_member_id = m.group_member_id
+        JOIN
+            users u ON m.user_id = u.user_id
+        WHERE
+            f.exercise_record_id = #{exerciseRecordId}
+            AND m.group_id = #{groupId}
+        ORDER BY
+            f.created_at ASC
+    </select>
+
+    <select id="existsByExerciseRecordId" resultType="boolean">
+        SELECT COUNT(1) > 0
+        FROM exercise_feedback
+        WHERE exercise_record_id = #{exerciseRecordId}
+    </select>
+
+    <delete id="deleteByGroupId">
+        DELETE FROM exercise_feedback
+        WHERE group_member_id IN (
+        SELECT group_member_id
+        FROM group_member
+        WHERE group_id = #{groupId}
+        )
+    </delete>
+</mapper>

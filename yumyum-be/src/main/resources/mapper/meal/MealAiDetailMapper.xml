@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.mealAiDetail.MealAiDetailMapper">
+
+    <insert id="insert" parameterType="MealAiDetailVO">
+        INSERT INTO meal_ai_detail (
+            meal_id,
+            difficulty,
+            reason
+        ) VALUES (
+            #{mealId},
+            #{difficulty},
+            #{reason}
+        )
+    </insert>
+
+    <select id="findByMealId" resultType="MealAiDetailVO">
+        SELECT
+            meal_id,
+            difficulty,
+            reason
+        FROM
+            meal_ai_detail
+        WHERE
+            meal_id = #{mealId}
+    </select>
+
+    <update id="updateById" parameterType="MealAiDetailVO">
+        UPDATE meal_ai_detail
+        SET
+            difficulty = #{difficulty},
+            reason = #{reason}
+        WHERE
+            meal_id = #{mealId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM meal_ai_detail
+        WHERE meal_id = #{mealId}
+    </delete>
+
+    <select id="findAiMealListByUserIdAndDate" resultType="AiMealHeaderDTO">
+        SELECT
+            m.meal_id AS mealId,
+            m.total_kcal AS totalKcal,
+            d.difficulty,
+            d.reason
+        FROM meal_ai_detail d
+            JOIN meal m ON d.meal_id = m.meal_id
+        WHERE m.user_id = #{userId}
+            AND m.meal_date = #{date}
+            AND m.is_recommendation = true
+    </select>
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.group.repository.mealFeedback.MealFeedbackMapper">
+
+    <select id="findAll" resultType="MealFeedbackVO">
+        SELECT 
+            meal_feedback_id AS mealFeedbackId,
+            content AS content,
+            created_at AS createdAt,
+            meal_id AS mealId,
+            group_member_id AS groupMemberId
+        FROM meal_feedback
+    </select>
+
+    <select id="findById" resultType="MealFeedbackVO">
+        SELECT 
+            meal_feedback_id AS mealFeedbackId,
+            content AS content,
+            created_at AS createdAt,
+            meal_id AS mealId,
+            group_member_id AS groupMemberId
+        FROM meal_feedback
+        WHERE meal_feedback_id = #{mealFeedbackId}
+    </select>
+
+    <insert id="insert" parameterType="MealFeedbackVO" useGeneratedKeys="true" keyProperty="mealFeedbackId">
+        INSERT INTO meal_feedback (
+            content,
+            meal_id,
+            group_member_id
+        ) VALUES (
+            #{content},
+            #{mealId},
+            #{groupMemberId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="MealFeedbackVO">
+        UPDATE meal_feedback
+        SET content = #{content}
+        WHERE meal_feedback_id = #{mealFeedbackId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM meal_feedback
+        WHERE meal_feedback_id = #{mealFeedbackId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM meal_feedback
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(meal_feedback_id)
+        FROM meal_feedback
+    </select>
+
+    <select id="findAllByGroupIdAndMealId" resultType="FeedbackResponse">
+        SELECT
+            f.meal_feedback_id AS feedbackId,
+            f.content          AS content,
+            f.created_at       AS createdAt,
+            u.user_id          AS writerUserId,
+            u.name             AS writerName,
+            m.role             AS writerRole
+        FROM
+            meal_feedback f
+        JOIN
+            group_member m ON f.group_member_id = m.group_member_id
+        JOIN
+            users u ON m.user_id = u.user_id
+        WHERE
+            f.meal_id = #{mealId}
+            AND m.group_id = #{groupId}
+        ORDER BY
+            f.created_at ASC
+    </select>
+
+    <select id="existsByMealId" resultType="boolean">
+        SELECT COUNT(1) > 0
+        FROM meal_feedback
+        WHERE meal_id = #{mealId}
+    </select>
+
+    <delete id="deleteByGroupId">
+        DELETE FROM meal_feedback
+        WHERE group_member_id IN (
+        SELECT group_member_id
+        FROM group_member
+        WHERE group_id = #{groupId}
+        )
+    </delete>
+
+</mapper>

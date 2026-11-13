@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.groupMeal.GroupMealMapper">
+	<select id="findAll" resultType="GroupMealVO">
+        SELECT *
+        FROM group_meal
+    </select>
+
+    <select id="findById" resultType="GroupMealVO">
+        SELECT *
+        FROM group_meal
+        WHERE meal_id = #{mealId}
+    </select>
+
+    <insert id="insert" parameterType="GroupMealVO">
+        INSERT INTO group_meal (
+            meal_id,
+            group_member_id
+        ) VALUES (
+            #{mealId},
+            #{groupMemberId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="GroupMealVO">
+        UPDATE group_meal
+        SET group_member_id = #{groupMemberId}
+        WHERE meal_id = #{mealId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM group_meal
+        WHERE meal_id = #{mealId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM group_meal
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(meal_id)
+        FROM group_meal
+    </select>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.notification.repository.notification.NotificationMapper">
+
+    <select id="findAll" resultType="NotificationVO">
+        SELECT 
+            notification_id AS notificationId,
+            is_read AS isRead,
+            created_at AS createdAt,
+            user_id AS userId,
+            notification_type_id AS notificationTypeId
+        FROM notification
+    </select>
+
+    <select id="findById" resultType="NotificationVO">
+        SELECT 
+            notification_id AS notificationId,
+            is_read AS isRead,
+            created_at AS createdAt,
+            user_id AS userId,
+            notification_type_id AS notificationTypeId
+        FROM notification
+        WHERE notification_id = #{notificationId}
+    </select>
+
+    <insert id="insert" parameterType="NotificationVO">
+        INSERT INTO notification (
+            is_read,
+            user_id,
+            notification_type_id
+        ) VALUES (
+            #{isRead},
+            #{userId},
+            #{notificationTypeId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="NotificationVO">
+        UPDATE notification
+        SET 
+            is_read = #{isRead},
+            user_id = #{userId},
+            notification_type_id = #{notificationTypeId}
+        WHERE notification_id = #{notificationId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM notification
+        WHERE notification_id = #{notificationId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM notification
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(notification_id)
+        FROM notification
+    </select>
+
+</mapper>

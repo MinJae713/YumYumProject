@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.badge.repository.userBadge.UserBadgeMapper">
+
+    <select id="findAll" resultType="UserBadgeVO">
+        SELECT 
+            user_badge_id AS userBadgeId,
+            achieved_at AS achievedAt,
+            user_id AS userId,
+            badge_id AS badgeId
+        FROM user_badge
+    </select>
+
+    <select id="findById" resultType="UserBadgeVO">
+        SELECT 
+            user_badge_id AS userBadgeId,
+            achieved_at AS achievedAt,
+            user_id AS userId,
+            badge_id AS badgeId
+        FROM user_badge
+        WHERE user_badge_id = #{userBadgeId}
+    </select>
+
+    <insert id="insert" parameterType="UserBadgeVO">
+        INSERT INTO user_badge (
+            user_id,
+            badge_id
+        ) VALUES (
+            #{userId},
+            #{badgeId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="UserBadgeVO">
+        UPDATE user_badge
+        SET 
+            user_id = #{userId},
+            badge_id = #{badgeId}
+        WHERE user_badge_id = #{userBadgeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM user_badge
+        WHERE user_badge_id = #{userBadgeId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM user_badge
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(user_badge_id)
+        FROM user_badge
+    </select>
+    
+    <select id="findAllByUserId">
+    	SELECT 
+            user_badge_id AS userBadgeId,
+            achieved_at AS achievedAt,
+            user_id AS userId,
+            badge_id AS badgeId
+        FROM user_badge
+        WHERE user_id = #{userId}
+    </select>
+    
+    <select id="findByUserIdAndBadgeId">
+    	SELECT 
+            user_badge_id AS userBadgeId,
+            achieved_at AS achievedAt,
+            user_id AS userId,
+            badge_id AS badgeId
+        FROM user_badge
+        WHERE user_id = #{userId}
+        AND badge_id = #{badgeId}
+    </select>
+    
+    <select id="findTop5ByUserIdOrderByAchievedAtDesc">
+    	SELECT 
+            user_badge_id AS userBadgeId,
+            achieved_at AS achievedAt,
+            user_id AS userId,
+            badge_id AS badgeId
+        FROM user_badge
+        WHERE user_id = #{userId}
+        ORDER BY achieved_at DESC
+        LIMIT 5
+    </select>
+    
+</mapper>

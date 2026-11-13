@@ -1,0 +1,35 @@
+package com.ssafy.yumyum.domain.badge.types;
+
+public enum BadgeType {
+	// 연속 식단 기록 작성
+	MEAL_STREAK_RECORD_WEEK, // 7일 
+	MEAL_STREAK_RECORD_FULL_MOON, // 15일 
+	MEAL_STREAK_RECORD_MONTH, // 30일 
+	// 연속 운동 기록 작성
+	EXERCISE_STREAK_RECORD_WEEK, // 7일
+	EXERCISE_STREAK_RECORD_FULL_MOON, // 15일 
+	EXERCISE_STREAK_RECORD_MONTH, // 30일 
+	// 첫
+	FIRST_SIGN_UP, // 가입
+	FIRST_MEAL_RECORD, // 식단 기록 작성
+	FIRST_EXERCISE_RECORD, // 운동 기록 작성
+	FIRST_SIGN_UP_GROUP, // 그룹 가입
+	// 6개 영양소 일정 누적 섭취량 이상
+	NUTRIENT_EXPERT,
+	
+	// 일정 누적 섭취량 달성
+//	ACHIEVE_CUMULATIVE_INTAKE_CARBOHYDRATE, // 탄수화물
+//	ACHIEVE_CUMULATIVE_INTAKE_PROTEIN, // 단백질
+//	ACHIEVE_CUMULATIVE_INTAKE_FAT, // 지방
+//	ACHIEVE_CUMULATIVE_INTAKE_CACIUM, // 칼슘
+//	ACHIEVE_CUMULATIVE_INTAKE_SUGAR, // 당류
+//	ACHIEVE_CUMULATIVE_INTAKE_FIBER, // 식이섬유
+	// 참 잘했어요
+	WELL_DONE,
+	// 그룹 내 달성
+	ACHIEVE_GROUP_THIRD, // 3등 이내
+	ACHIEVE_GROUP_NO_1, // 1등
+	// 10회 이상 선택
+	SELECT_MEAL_AI_10, // AI
+	SELECT_MEAL_GROUP_10 // 그룹장
+}

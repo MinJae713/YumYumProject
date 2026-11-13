@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.meal.repository.food.FoodMapper">
+
+    <select id="findAll" resultType="FoodVO">
+        SELECT *
+        FROM food
+    </select>
+
+    <select id="findById" resultType="FoodVO">
+        SELECT *
+        FROM food
+        WHERE food_id = #{foodId}
+    </select>
+
+    <insert id="insert" parameterType="FoodVO" useGeneratedKeys="true" keyProperty="foodId">
+        INSERT INTO food (
+            food_name,
+            energy,
+            serving_size,
+            water,
+            protein,
+            carbohydrate,
+            fat,
+            sugar,
+            fiber,
+            calcium,
+            iron,
+            potassium,
+            sodium,
+            vitamin_a,
+            vitamin_b1,
+            vitamin_c,
+            vitamin_d,
+            cholesterol,
+            saturated_fatty_acid,
+            unsaturated_fatty_acid,
+            caffeine,
+            magnesium,
+            amino_acid,
+            amount,
+            food_unit_id
+        ) VALUES (
+            #{foodName},
+            #{energy},
+            #{servingSize},
+            #{water},
+            #{protein},
+            #{carbohydrate},
+            #{fat},
+            #{sugar},
+            #{fiber},
+            #{calcium},
+            #{iron},
+            #{potassium},
+            #{sodium},
+            #{vitaminA},
+            #{vitaminB1},
+            #{vitaminC},
+            #{vitaminD},
+            #{cholesterol},
+            #{saturatedFattyAcid},
+            #{unsaturatedFattyAcid},
+            #{caffeine},
+            #{magnesium},
+            #{aminoAcid},
+            #{amount},
+            #{foodUnitId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="FoodVO">
+        UPDATE food
+        SET
+            food_name = #{foodName},
+            energy = #{energy},
+            serving_size = #{servingSize},
+            water = #{water},
+            protein = #{protein},
+            carbohydrate = #{carbohydrate},
+            fat = #{fat},
+            sugar = #{sugar},
+            fiber = #{fiber},
+            calcium = #{calcium},
+            iron = #{iron},
+            potassium = #{potassium},
+            sodium = #{sodium},
+            vitamin_a = #{vitaminA},
+            vitamin_b1 = #{vitaminB1},
+            vitamin_c = #{vitaminC},
+            vitamin_d = #{vitaminD},
+            cholesterol = #{cholesterol},
+            saturated_fatty_acid = #{saturatedFattyAcid},
+            unsaturated_fatty_acid = #{unsaturatedFattyAcid},
+            caffeine = #{caffeine},
+            magnesium = #{magnesium},
+            amino_acid = #{aminoAcid},
+            amount = #{amount},
+            food_unit_id = #{foodUnitId}
+        WHERE food_id = #{foodId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM food
+        WHERE food_id = #{foodId}
+    </delete>
+
+    <select id="count">
+    	SELECT COUNT(*) 
+    	FROM food
+    </select>
+
+    <select id="maxId">
+    	SELECT MAX(food_id)
+    	FROM food
+    </select>
+
+    <select id="countByFoodName">
+    	SELECT COUNT(*)
+    	FROM food
+    	WHERE food_name = #{foodName}
+    </select>
+
+    <select id="findAllByFoodName" resultType="FoodVO">
+    	SELECT *
+    	FROM food
+    	WHERE food_name LIKE CONCAT('%', #{foodName}, '%')
+    </select>
+
+    <select id="findByFoodName" resultType="FoodVO">
+        SELECT *
+        FROM food
+        WHERE food_name = #{foodName}
+        LIMIT 1
+    </select>
+
+    <select id="countByKeyword" resultType="int">
+        SELECT COUNT(*)
+        FROM food
+        WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            AND food_name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+
+    <select id="selectByKeywordWithPaging" resultType="FoodVO">
+        SELECT *
+        FROM food
+        WHERE 1=1
+        <if test="keyword != null and keyword != ''">
+            AND food_name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        ORDER BY food_id
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findByFoodNameIgnoreSpace" resultType="FoodVO">
+        SELECT *
+        FROM food
+        WHERE REPLACE(food_name, ' ', '') = #{cleanName}
+        LIMIT 1
+    </select>
+
+    <select id="findByFoodNameContained" resultType="FoodVO">
+        SELECT *
+        FROM food
+        WHERE #{cleanName} LIKE CONCAT('%', REPLACE(food_name, ' ', ''), '%')
+
+        AND LENGTH(REPLACE(food_name, ' ', '')) >= 2
+
+        ORDER BY LENGTH(food_name) DESC
+        LIMIT 1
+    </select>
+</mapper>

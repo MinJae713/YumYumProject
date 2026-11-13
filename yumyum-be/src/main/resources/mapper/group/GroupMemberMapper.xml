@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.yumyum.domain.group.repository.groupMember.GroupMemberMapper">
+
+    <select id="findAll" resultType="GroupMemberVO">
+        SELECT 
+            group_member_id AS groupMemberId,
+            role AS role,
+            is_active AS isActive,
+            joined_at AS joinedAt,
+            points AS points,
+            user_id AS userId,
+            group_id AS groupId
+        FROM group_member
+        WHERE is_active = 1
+    </select>
+
+    <select id="findById" resultType="GroupMemberVO">
+        SELECT 
+            group_member_id AS groupMemberId,
+            role AS role,
+            is_active AS isActive,
+            joined_at AS joinedAt,
+            points AS points,
+            user_id AS userId,
+            group_id AS groupId
+        FROM group_member
+        WHERE group_member_id = #{groupMemberId}
+            AND is_active = 1
+    </select>
+
+    <select id="findByGroupIdAndUserId" resultType="GroupMemberVO">
+        SELECT
+        group_member_id AS groupMemberId,
+        role AS role,
+        is_active AS isActive,
+        joined_at AS joinedAt,
+        points AS points,
+        user_id AS userId,
+        group_id AS groupId
+        FROM group_member
+        WHERE user_id = #{userId}
+            AND group_id = #{groupId}
+        AND is_active = 1
+    </select>
+
+    <insert id="insert" parameterType="GroupMemberVO" useGeneratedKeys="true" keyProperty="groupMemberId" >
+        INSERT INTO group_member (
+            role,
+            is_active,
+            joined_at,
+            points,
+            user_id,
+            group_id
+        ) VALUES (
+            #{role},
+            #{isActive},
+            NOW(),
+            #{points},
+            #{userId},
+            #{groupId}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="GroupMemberVO">
+        UPDATE group_member
+        SET 
+            role = #{role},
+            is_active = #{isActive},
+            joined_at = #{joinedAt},
+            points = #{points},
+            user_id = #{userId},
+            group_id = #{groupId}
+        WHERE group_member_id = #{groupMemberId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM group_member
+        WHERE group_member_id = #{groupMemberId}
+    </delete>
+
+    <select id="count">
+        SELECT COUNT(*) 
+        FROM group_member
+    </select>
+
+    <select id="maxId">
+        SELECT MAX(group_member_id)
+        FROM group_member
+    </select>
+
+	<select id="findAllByUserId" resultType="GroupMemberVO">
+        SELECT 
+            group_member_id AS groupMemberId,
+            role AS role,
+            is_active AS isActive,
+            joined_at AS joinedAt,
+            points AS points,
+            user_id AS userId,
+            group_id AS groupId
+        FROM group_member
+        WHERE user_id = #{userId}
+            AND is_active = 1
+    </select>
+
+    <select id="findGroupListByUserId" resultType="GroupListResponse">
+        SELECT
+            g.group_id AS groupId,
+            g.group_name AS groupName,
+            m.role AS roleName,
+            COUNT(m2.group_member_id) AS memberCount
+        FROM group_member m
+        JOIN group_table g ON m.group_id = g.group_id
+        LEFT JOIN group_member m2 ON g.group_id = m2.group_id AND m2.is_active = 1
+        WHERE m.user_id = #{userId}
+            AND m.is_active = 1
+        GROUP BY g.group_id, g.group_name, m.role;
+    </select>
+
+    <delete id="deleteByGroupId">
+        DELETE FROM group_member
+        WHERE group_id = #{groupId}
+    </delete>
+
+    <select id="findMembersByGroupId" resultType="GroupMemberInfoDTO">
+        SELECT
+        gm.group_member_id AS groupMemberId,
+        gm.user_id AS userId,
+        gm.role AS groupRole,
+        gm.points AS points,
+
+        u.name AS name,
+        u.gender AS gender,
+        u.current_weight AS currentWeight,
+        u.target_weight AS targetWeight,
+        u.goal_type AS goalType
+        FROM group_member gm
+            JOIN users u ON gm.user_id = u.user_id
+        WHERE gm.group_id = #{groupId}
+            AND gm.role = 'MEMBER'
+            AND gm.is_active = 1
+    </select>
+
+    <select id="existsByGroupIdAndUserId" resultType="boolean">
+        SELECT COUNT(*)
+        FROM group_member
+        WHERE user_id = #{userId}
+            AND group_id = #{groupId}
+            AND is_active = 1
+    </select>
+
+    <update id="softDeleteById" parameterType="Long">
+        UPDATE group_member
+        SET is_active = 0
+        WHERE group_member_id = #{groupMemberId}
+    </update>
+
+    <select id="findUserNameByGroupMemberId" resultType="String">
+        SELECT u.name
+        FROM group_member m
+        JOIN users u ON m.user_id = u.user_id
+        WHERE m.group_member_id = #{groupMemberId}
+    </select>
+
+    <select id="findBestRankingByUserId" resultType="Integer">
+        SELECT MIN(rank_calc.my_rank)
+        FROM (
+            SELECT
+                -- (내 그룹 내에서 나보다 포인트가 높은 사람 수) + 1 = 내 등수
+                (SELECT COUNT(*) + 1
+                FROM group_member gm2
+                WHERE gm2.group_id = gm1.group_id
+                    AND gm2.points > gm1.points
+                    AND gm2.is_active = 1) as my_rank
+            FROM group_member gm1
+            WHERE gm1.user_id = #{userId}
+                AND gm1.is_active = 1
+        ) as rank_calc
+    </select>
+    
+    <select id="findByGroupIdAndUserIdWithInActive" resultType="GroupMemberVO">
+        SELECT
+            group_member_id AS groupMemberId,
+            role AS role,
+            is_active AS isActive,
+            joined_at AS joinedAt,
+            points AS points,
+            user_id AS userId,
+            group_id AS groupId
+        FROM group_member
+        WHERE user_id = #{userId}
+            AND group_id = #{groupId}
+    </select>
+
+    <update id="rejoinGroupMember" parameterType="Long">
+        UPDATE group_member
+        SET is_active = 1,
+            joined_at = NOW(),
+            points = 0
+        WHERE group_member_id = #{groupMemberId}
+    </update>
+
+</mapper>
